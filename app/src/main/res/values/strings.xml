@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">MyMapApp</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+
+    <string name="action_view">Endre visning</string>
+    <string name="action_delete">Slett punkter</string>
 </resources>

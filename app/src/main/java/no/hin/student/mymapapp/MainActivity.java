@@ -38,7 +38,7 @@ public class MainActivity extends Activity implements GoogleMap.OnMapClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         googleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
-        googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+
         if (googleMap != null) {
             addLines();
         }
@@ -84,9 +84,16 @@ public class MainActivity extends Activity implements GoogleMap.OnMapClickListen
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings)
+        if (id == R.id.action_view)
         {
-            return true;
+            if (googleMap.getMapType() == GoogleMap.MAP_TYPE_NORMAL)
+                googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+            else googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        }
+
+        if (id == R.id.action_delete)
+        {
+
         }
 
         return super.onOptionsItemSelected(item);
