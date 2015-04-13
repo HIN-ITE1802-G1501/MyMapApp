@@ -4,16 +4,25 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 
 public class MainActivity extends Activity
 {
+    GoogleMap googleMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        googleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+        googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        googleMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Test").draggable(true));
     }
 
 
@@ -41,4 +50,5 @@ public class MainActivity extends Activity
 
         return super.onOptionsItemSelected(item);
     }
+
 }
