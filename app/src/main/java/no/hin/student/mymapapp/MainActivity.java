@@ -1,17 +1,19 @@
 package no.hin.student.mymapapp;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -19,7 +21,7 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 
-public class MainActivity extends Activity implements GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerClickListener {
+public class MainActivity extends ActionBarActivity implements GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerClickListener {
     GoogleMap googleMap;
 
     String TAG = "Prosjekt: ";
@@ -47,6 +49,9 @@ public class MainActivity extends Activity implements GoogleMap.OnMapClickListen
         googleMap.setOnMapClickListener(this);
         googleMap.setOnMapLongClickListener(this);
         googleMap.setOnMarkerClickListener(this);
+
+        UiSettings uiSettings = googleMap.getUiSettings();
+        uiSettings.setZoomControlsEnabled(true);
     }
 
     private void addLines() {
