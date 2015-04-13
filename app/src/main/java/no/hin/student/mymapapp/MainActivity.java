@@ -1,7 +1,10 @@
 package no.hin.student.mymapapp;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -54,6 +57,15 @@ public class MainActivity extends Activity implements GoogleMap.OnMapClickListen
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(STOKMARKNES, 13));
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        final LocationManager locationManager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
