@@ -101,7 +101,7 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnMapCl
 
         if (id == R.id.action_delete)
         {
-
+            deleteFile(FileManager.FILE_NAME);
         }
 
         return super.onOptionsItemSelected(item);

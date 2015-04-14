@@ -15,7 +15,7 @@ import java.io.ObjectOutputStream;
 public class FileManager
 {
     private Context context;
-    private String fileName = "mapPositions";
+    public static final String FILE_NAME = "mapPositions";
 
     public FileManager(Context context)
     {
@@ -39,7 +39,7 @@ public class FileManager
 
         try
         {
-            FileOutputStream fos = context.openFileOutput(fileName, Context.MODE_APPEND);
+            FileOutputStream fos = context.openFileOutput(FILE_NAME, Context.MODE_APPEND);
             objectOutputStream = new ObjectOutputStream(fos);
         }
         catch (IOException e)
