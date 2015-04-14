@@ -28,9 +28,7 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnMapCl
 
     String TAG = "Prosjekt: ";
 
-    private static final LatLng STOKMARKNES = new LatLng(68.568854, 14.945730);
-    private static final LatLng INNHAVET = new LatLng(67.968125 , 15.926599);
-    private static final LatLng NARVIK = new LatLng(68.434521,  17.420488);
+
 
     private boolean markerClicked;
     private PolylineOptions rectOptions;
@@ -44,11 +42,6 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnMapCl
         setContentView(R.layout.activity_main);
         googleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
 
-        if (googleMap != null) {
-            addLines();
-        }
-
-
         googleMap.setOnMapClickListener(this);
         googleMap.setOnMapLongClickListener(this);
         googleMap.setOnMarkerClickListener(this);
@@ -61,17 +54,10 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnMapCl
         drawSavedMarkers();
     }
 
-    private void addLines() {
-        googleMap.addMarker(new MarkerOptions().position(STOKMARKNES).title("Stokmarknes").draggable(true));
-        googleMap.addMarker(new MarkerOptions().position(INNHAVET).title("Innhavet").draggable(true));
-        googleMap.addMarker(new MarkerOptions().position(NARVIK).title("Narvik").draggable(true));
-        googleMap.addPolyline((new PolylineOptions()).add(INNHAVET, NARVIK, STOKMARKNES, INNHAVET).width(5).color(Color.CYAN).geodesic(true));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(STOKMARKNES, 13));
-    }
-
     private void drawSavedMarkers()
     {
         List<LatLng> positions = fileManager.loadPositions();
+        PolylineOptions pol = new PolylineOptions();
 
         if (positions != null)
         {
@@ -79,7 +65,10 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnMapCl
             {
                 Log.d("--------------------", positions.get(i).latitude + " ---- " + positions.get(i).longitude);
                 googleMap.addMarker(new MarkerOptions().position(positions.get(i)).title(positions.get(i).toString()));
+                pol.add(positions.get(i));
             }
+            googleMap.addPolyline(pol.add(positions.get(0)).width(5).color(Color.CYAN).geodesic(true));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(positions.get(positions.size()-1), 13));
         }
     }
 
@@ -120,6 +109,7 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnMapCl
         if (id == R.id.action_delete)
         {
             deleteFile(FileManager.FILE_NAME);
+            googleMap.clear();
         }
 
         return super.onOptionsItemSelected(item);
