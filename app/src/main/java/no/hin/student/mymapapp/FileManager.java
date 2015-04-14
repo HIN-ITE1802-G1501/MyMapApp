@@ -5,9 +5,15 @@ import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.EOFException;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Aleksander on 14.04.2015.
@@ -22,6 +28,22 @@ public class FileManager
         this.context = context;
     }
 
+
+
+    private class SerializableLatLng implements Serializable
+    {
+        public double latitude;
+        public double longtitude;
+
+        public SerializableLatLng(double latitude, double longtitude)
+        {
+            this.latitude = latitude;
+            this.longtitude = longtitude;
+        }
+    }
+
+
+
     public void savePosition(LatLng latLong)
     {
         SerializableLatLng point = new SerializableLatLng(latLong.latitude, latLong.longitude);
@@ -30,7 +52,7 @@ public class FileManager
         if (objectOutputStream != null)
             writeObjectAndCloseStream(point, objectOutputStream);
         else
-            Log.d("Error: ", "Couldn't open outputstream in FileManager.savePosition");
+            Log.d("Error: ", "Couldn't write object -- couldn't open outputstream in FileManager.savePosition");
     }
 
     private ObjectOutputStream getObjectOutputStream()
@@ -73,16 +95,72 @@ public class FileManager
         }
     }
 
-
-    private class SerializableLatLng
+    public List<LatLng> loadPositions()
     {
-        public double latitude;
-        public double longtitude;
+        ObjectInputStream objectInputStream = getObjectInputStream();
+        List<LatLng> positions = null;
 
-        public SerializableLatLng(double latitude, double longtitude)
+        if (objectInputStream != null)
         {
-            this.latitude = latitude;
-            this.longtitude = longtitude;
+            positions = readObjectsAndCloseStream(objectInputStream);
         }
+        else
+            Log.d("Error: ", "Couldn't read objects -- couldn't open inputstream in FileManager.loadPositions");
+
+        return positions;
     }
+
+    private ObjectInputStream getObjectInputStream()
+    {
+        ObjectInputStream objectInputStream = null;
+
+        try
+        {
+            FileInputStream fis = new FileInputStream(FILE_NAME);
+            objectInputStream = new ObjectInputStream(fis);
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        return objectInputStream;
+    }
+
+    private List<LatLng> readObjectsAndCloseStream(ObjectInputStream ois)
+    {
+        List<LatLng> positions = new ArrayList<LatLng>();
+
+        try
+        {
+            while (true)    // Loop ends when we try to read past end of file
+            {
+                SerializableLatLng serializableLatLng = (SerializableLatLng)ois.readObject();
+                LatLng latLng = new LatLng(serializableLatLng.latitude, serializableLatLng.longtitude);
+                positions.add(latLng);
+            }
+        }
+        catch (EOFException e)
+        {
+            e.printStackTrace();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                ois.close();
+            }
+            catch(IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        return positions;
+    }
+
 }

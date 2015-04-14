@@ -20,6 +20,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.util.List;
+
 
 public class MainActivity extends ActionBarActivity implements GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerClickListener {
     GoogleMap googleMap;
@@ -55,6 +57,8 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnMapCl
         uiSettings.setZoomControlsEnabled(true);
 
         fileManager = new FileManager(this);
+
+        drawSavedMarkers();
     }
 
     private void addLines() {
@@ -63,6 +67,20 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnMapCl
         googleMap.addMarker(new MarkerOptions().position(NARVIK).title("Narvik").draggable(true));
         googleMap.addPolyline((new PolylineOptions()).add(INNHAVET, NARVIK, STOKMARKNES, INNHAVET).width(5).color(Color.CYAN).geodesic(true));
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(STOKMARKNES, 13));
+    }
+
+    private void drawSavedMarkers()
+    {
+        List<LatLng> positions = fileManager.loadPositions();
+
+        if (positions != null)
+        {
+            for (int i = 0; i < positions.size(); i++)
+            {
+                Log.d("-------------------------------------------------", positions.get(i).latitude + " ---- " + positions.get(i).longitude);
+                googleMap.addMarker(new MarkerOptions().position(positions.get(i)).title(positions.get(i).toString()));
+            }
+        }
     }
 
 
