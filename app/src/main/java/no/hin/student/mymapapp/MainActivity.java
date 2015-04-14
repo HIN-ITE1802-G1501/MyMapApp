@@ -30,9 +30,10 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnMapCl
     private static final LatLng INNHAVET = new LatLng(67.968125 , 15.926599);
     private static final LatLng NARVIK = new LatLng(68.434521,  17.420488);
 
-    boolean markerClicked;
-    PolylineOptions rectOptions;
-    Polyline polyline;
+    private boolean markerClicked;
+    private PolylineOptions rectOptions;
+    private Polyline polyline;
+    private FileManager fileManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -52,6 +53,8 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnMapCl
 
         UiSettings uiSettings = googleMap.getUiSettings();
         uiSettings.setZoomControlsEnabled(true);
+
+        fileManager = new FileManager(this);
     }
 
     private void addLines() {
@@ -116,6 +119,8 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnMapCl
         Log.d(TAG, "New marker added@" + point.toString());
         googleMap.addMarker(new MarkerOptions().position(point).title(point.toString()));
         markerClicked = false;
+
+        fileManager.savePosition(point);
     }
 
     @Override
