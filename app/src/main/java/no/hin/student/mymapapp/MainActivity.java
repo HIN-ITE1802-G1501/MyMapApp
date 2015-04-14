@@ -77,7 +77,7 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnMapCl
         {
             for (int i = 0; i < positions.size(); i++)
             {
-                Log.d("-------------------------------------------------", positions.get(i).latitude + " ---- " + positions.get(i).longitude);
+                Log.d("--------------------", positions.get(i).latitude + " ---- " + positions.get(i).longitude);
                 googleMap.addMarker(new MarkerOptions().position(positions.get(i)).title(positions.get(i).toString()));
             }
         }
