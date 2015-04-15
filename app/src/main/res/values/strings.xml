@@ -4,4 +4,5 @@
 
     <string name="action_view">Endre visning</string>
     <string name="action_delete">Slett punkter</string>
+    <string name="action_writedb">Skriv til database</string>
 </resources>

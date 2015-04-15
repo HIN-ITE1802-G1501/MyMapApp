@@ -112,6 +112,12 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnMapCl
             googleMap.clear();
         }
 
+
+        if (id == R.id.action_writedb)
+        {
+            deleteFile(FileManager.FILE_NAME);
+            googleMap.clear();
+        }
         return super.onOptionsItemSelected(item);
     }
 
