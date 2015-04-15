@@ -26,5 +26,11 @@ public class MyServlet extends HttpServlet {
             resp.getWriter().println("Please enter a name");
         }
         resp.getWriter().println("Hello " + name);
+        resp.getWriter().println(getData());
+    }
+
+    private String getData() {
+        Database database = new Database();
+        return database.getData();
     }
 }
