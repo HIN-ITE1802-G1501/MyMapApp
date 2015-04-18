@@ -4,7 +4,7 @@ import java.io.IOException;
 import javax.servlet.http.*;
 
 
-public class MyServlet extends HttpServlet {
+public class Location extends HttpServlet {
     Database database = new Database();
 
 
@@ -12,7 +12,6 @@ public class MyServlet extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("text/plain");
         resp.getWriter().println(getData());
-        doPost(req,resp);
     }
 
     @Override
@@ -22,7 +21,6 @@ public class MyServlet extends HttpServlet {
         String longitude = req.getParameter("longitude");
 
         resp.setContentType("text/plain");
-        //resp.getWriter().println(device + " " + latitude + " " + longitude);
         if (device == null || latitude == null || longitude == null) {
             resp.getWriter().println("Please use all required parameters: device, latitude and longitude");
         }

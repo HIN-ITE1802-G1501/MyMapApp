@@ -11,12 +11,13 @@ import org.apache.http.util.EntityUtils;
 import java.net.URLEncoder;
 
 class GetServlet extends AsyncTask<String, Void, String> {
+    String TAG = "Project";
 
     @Override
     protected String doInBackground(String... params) {
         try{
             String urlParams = URLEncoder.encode("device", "UTF-8") + "=" + URLEncoder.encode("test", "UTF-8");
-            String serverURL = "http://10.11.1.107:8080/MyMapApp" + "?" + urlParams;
+            String serverURL = "http://kark.hin.no:8088/MyMapApp/Location" + "?" + urlParams;
             HttpClient httpClient = new DefaultHttpClient();
             HttpGet httpGet = new HttpGet(serverURL);
             HttpResponse response = httpClient.execute(httpGet);
@@ -34,6 +35,6 @@ class GetServlet extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String result) {
         if (result != null)
-            Log.d("Test","test");
+            Log.d(TAG, "Ok");
     }
 }

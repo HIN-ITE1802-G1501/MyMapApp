@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -114,12 +115,10 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnMapCl
 
         if (id == R.id.action_writedb)
         {
-
-
             for (int i = 0; i < positions.size(); i++)
             {
                 PostServlet p = new PostServlet();
-                p.execute("MinAndroid", Double.toString(positions.get(i).latitude),  Double.toString(positions.get(i).longitude));
+                p.execute(Build.SERIAL, Double.toString(positions.get(i).latitude),  Double.toString(positions.get(i).longitude));
             }
 
         }

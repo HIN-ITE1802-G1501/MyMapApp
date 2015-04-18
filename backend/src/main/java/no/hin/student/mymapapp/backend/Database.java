@@ -14,7 +14,7 @@ public class Database {
     private String dbServer = "158.39.26.242";
     private String dbName = "stud_v15_karlsen";
     private String dbUsername = "karlsen";
-    private String dbPassword = "";
+    private String dbPassword = "530617Pass";
 
 
     public String writeData(String device, String latitude, String longitude) {

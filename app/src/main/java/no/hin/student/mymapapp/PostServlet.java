@@ -23,7 +23,7 @@ class PostServlet extends AsyncTask<String, Void, String> {
                     URLEncoder.encode("longitude", "UTF-8") + "=" + URLEncoder.encode(params[2], "UTF-8")
             ;
             Log.d("Prosjekt", urlParams);
-            String serverURL = "http://10.11.1.107:8080/MyMapApp" + "?" + urlParams;
+            String serverURL = "http://kark.hin.no:8088/MyMapApp/Location" + "?" + urlParams;
             Log.d("Prosjekt", serverURL);
 
             HttpClient httpClient = new DefaultHttpClient();
