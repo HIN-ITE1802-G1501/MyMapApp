@@ -19,7 +19,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-
 import java.util.List;
 
 
@@ -27,7 +26,7 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnMapCl
     GoogleMap googleMap;
 
     String TAG = "Prosjekt: ";
-
+    List<LatLng> positions;
 
 
     private boolean markerClicked;
@@ -56,14 +55,14 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnMapCl
 
     private void drawSavedMarkers()
     {
-        List<LatLng> positions = fileManager.loadPositions();
+        positions = fileManager.loadPositions();
         PolylineOptions pol = new PolylineOptions();
 
         if (positions != null)
         {
             for (int i = 0; i < positions.size(); i++)
             {
-                Log.d("--------------------", positions.get(i).latitude + " ---- " + positions.get(i).longitude);
+                Log.d(TAG, positions.get(i).latitude + " ---- " + positions.get(i).longitude);
                 googleMap.addMarker(new MarkerOptions().position(positions.get(i)).title(positions.get(i).toString()));
                 pol.add(positions.get(i));
             }
@@ -115,8 +114,14 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnMapCl
 
         if (id == R.id.action_writedb)
         {
-            deleteFile(FileManager.FILE_NAME);
-            googleMap.clear();
+
+
+            for (int i = 0; i < positions.size(); i++)
+            {
+                PostServlet p = new PostServlet();
+                p.execute("MinAndroid", Double.toString(positions.get(i).latitude),  Double.toString(positions.get(i).longitude));
+            }
+
         }
         return super.onOptionsItemSelected(item);
     }

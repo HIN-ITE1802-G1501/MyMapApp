@@ -1,0 +1,39 @@
+package no.hin.student.mymapapp;
+
+import android.os.AsyncTask;
+import android.util.Log;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+
+import java.net.URLEncoder;
+
+class GetServlet extends AsyncTask<String, Void, String> {
+
+    @Override
+    protected String doInBackground(String... params) {
+        try{
+            String urlParams = URLEncoder.encode("device", "UTF-8") + "=" + URLEncoder.encode("test", "UTF-8");
+            String serverURL = "http://10.11.1.107:8080/MyMapApp" + "?" + urlParams;
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpGet httpGet = new HttpGet(serverURL);
+            HttpResponse response = httpClient.execute(httpGet);
+            if (response.getStatusLine().getStatusCode() == 200) {
+                Log.d("Prosjekt",EntityUtils.toString(response.getEntity()));
+
+            } else {
+            }
+        }catch(Exception e){
+            return e.toString();
+        }
+        return null;
+    }
+
+    @Override
+    protected void onPostExecute(String result) {
+        if (result != null)
+            Log.d("Test","test");
+    }
+}

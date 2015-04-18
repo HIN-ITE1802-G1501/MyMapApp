@@ -16,9 +16,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Aleksander on 14.04.2015.
- */
+
 public class FileManager
 {
     public static final String FILE_NAME = "mapPositions";

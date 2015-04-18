@@ -1,25 +1,18 @@
-/*
-   For step-by-step instructions on connecting your Android application to this backend module,
-   see "App Engine Java Servlet Module" template documentation at
-   https://github.com/GoogleCloudPlatform/gradle-appengine-templates/tree/master/HelloWorld
-*/
-
 package no.hin.student.mymapapp.backend;
 
 import java.io.IOException;
-
 import javax.servlet.http.*;
+
 
 public class MyServlet extends HttpServlet {
     Database database = new Database();
 
 
     @Override
-    public void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("text/plain");
         resp.getWriter().println(getData());
-        resp.getWriter().println(database.writeData("test1", "test2", "test3"));
+        doPost(req,resp);
     }
 
     @Override
@@ -29,6 +22,7 @@ public class MyServlet extends HttpServlet {
         String longitude = req.getParameter("longitude");
 
         resp.setContentType("text/plain");
+        //resp.getWriter().println(device + " " + latitude + " " + longitude);
         if (device == null || latitude == null || longitude == null) {
             resp.getWriter().println("Please use all required parameters: device, latitude and longitude");
         }

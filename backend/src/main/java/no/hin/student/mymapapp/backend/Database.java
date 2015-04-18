@@ -6,9 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-/**
- * Created by kurt-erik on 15.04.2015.
- */
+
 public class Database {
     private Connection con = null;
     private Statement st = null;
@@ -24,9 +22,8 @@ public class Database {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             con = (Connection) DriverManager.getConnection("jdbc:mysql://" + dbServer + ":3306/" + dbName, dbUsername, dbPassword);
             st = (Statement) con.createStatement();
-            st.executeUpdate(String.format("INSERT mymapapp (id, device, latitude, longitude) VALUES (NULL, '%s', '%s', '%s')", device, latitude, longitude));
-            StringBuffer sb = new StringBuffer();
-            return sb.toString();
+            int returnCode = st.executeUpdate(String.format("INSERT mymapapp (id, device, latitude, longitude) VALUES (NULL, '%s', '%s', '%s')", device, latitude, longitude));
+            return Integer.toString(returnCode);
         } catch (Exception e) {
             System.err.println("Exception: " + e.getMessage());
         } finally {
