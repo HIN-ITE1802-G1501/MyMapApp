@@ -11,26 +11,32 @@ import java.io.IOException;
 import javax.servlet.http.*;
 
 public class MyServlet extends HttpServlet {
+    Database database = new Database();
+
+
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
         resp.setContentType("text/plain");
         resp.getWriter().println(getData());
+        resp.getWriter().println(database.writeData("test1", "test2", "test3"));
     }
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String name = req.getParameter("name");
+        String device = req.getParameter("device");
+        String latitude = req.getParameter("latitude");
+        String longitude = req.getParameter("longitude");
+
         resp.setContentType("text/plain");
-        if (name == null) {
-            resp.getWriter().println("Please enter a name");
+        if (device == null || latitude == null || longitude == null) {
+            resp.getWriter().println("Please use all required parameters: device, latitude and longitude");
         }
-        resp.getWriter().println("Hello " + name);
-        resp.getWriter().println(getData());
+        resp.getWriter().println("Writing data");
+        database.writeData(device, latitude, longitude);
     }
 
     private String getData() {
-        Database database = new Database();
         return database.getData();
     }
 }

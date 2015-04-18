@@ -19,9 +19,25 @@ public class Database {
     private String dbPassword = "";
 
 
-    public void writeData() {
-
+    public String writeData(String device, String latitude, String longitude) {
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            con = (Connection) DriverManager.getConnection("jdbc:mysql://" + dbServer + ":3306/" + dbName, dbUsername, dbPassword);
+            st = (Statement) con.createStatement();
+            st.executeUpdate(String.format("INSERT mymapapp (id, device, latitude, longitude) VALUES (NULL, '%s', '%s', '%s')", device, latitude, longitude));
+            StringBuffer sb = new StringBuffer();
+            return sb.toString();
+        } catch (Exception e) {
+            System.err.println("Exception: " + e.getMessage());
+        } finally {
+            try {
+                if (con != null)
+                    con.close();
+            } catch (SQLException e) {}
+        }
+        return "Error reading from database";
     }
+
 
     public String getData() {
         try {
