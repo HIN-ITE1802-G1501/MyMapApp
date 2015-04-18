@@ -12,7 +12,7 @@ import java.net.URLEncoder;
 
 class GetServlet extends AsyncTask<String, Void, String> {
     String TAG = "Project";
-
+ 
     @Override
     protected String doInBackground(String... params) {
         try{
