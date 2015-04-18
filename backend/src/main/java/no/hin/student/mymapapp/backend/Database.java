@@ -13,9 +13,11 @@ public class Database {
     private Connection con = null;
     private Statement st = null;
     private ResultSet rs = null;
+    private String dbServer = "158.39.26.242";
+    private String dbName = "stud_v15_karlsen";
     private String dbUsername = "karlsen";
     private String dbPassword = "";
-    private String dbName = "";
+
 
     public void writeData() {
 
@@ -24,9 +26,9 @@ public class Database {
     public String getData() {
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-            con = (Connection) DriverManager.getConnection("jdbc:mysql://158.39.26.242:3306/" + dbName, dbUsername, dbPassword);
+            con = (Connection) DriverManager.getConnection("jdbc:mysql://" + dbServer + ":3306/" + dbName, dbUsername, dbPassword);
             st = (Statement) con.createStatement();
-            rs = (ResultSet) st.executeQuery("SELECT id, device, latitude, longitude, FROM mymapapp");
+            rs = (ResultSet) st.executeQuery("SELECT id, device, latitude, longitude FROM mymapapp");
             StringBuffer sb = new StringBuffer();
             while (rs.next()) {
                 String id = rs.getString(1);
