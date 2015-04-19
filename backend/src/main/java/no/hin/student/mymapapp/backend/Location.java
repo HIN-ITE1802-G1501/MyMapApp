@@ -1,3 +1,5 @@
+// MyMapApp
+
 package no.hin.student.mymapapp.backend;
 
 import java.io.IOException;

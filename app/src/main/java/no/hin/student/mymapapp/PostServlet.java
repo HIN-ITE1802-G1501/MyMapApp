@@ -1,3 +1,5 @@
+// MyMapApp
+
 package no.hin.student.mymapapp;
 
 import android.os.AsyncTask;
