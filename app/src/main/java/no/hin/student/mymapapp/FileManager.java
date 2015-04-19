@@ -53,15 +53,9 @@ public class FileManager
             FileOutputStream fos = context.openFileOutput(FILE_NAME, Context.MODE_APPEND);
 
             if (fileExists)
-            {
                 objectOutputStream = new AppendingObjectOutputStream(fos);
-                Log.d("asdfasdfasdf", "APPENDING");
-            }
             else
-            {
                 objectOutputStream = new ObjectOutputStream(fos);
-                Log.d("asdfasdfasdf", "FIRST");
-            }
         }
         catch (IOException e)
         {
@@ -178,9 +172,6 @@ public class FileManager
         @Override
         protected void writeStreamHeader() throws IOException
         {
-            // do not write a header, but reset:
-            // this line added after another question
-            // showed a problem with the original
             reset();
         }
 
